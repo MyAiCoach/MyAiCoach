@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MyaiCoach.Domain\MyaiCoach.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
