@@ -3,9 +3,58 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{C1EDB097-728A-411B-8E4A-FF1C2D379CD0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{2D0E47B4-B526-4668-8736-706330525C19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{9C443E26-D4A5-487F-B4DD-796E43852D26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyaiCoach.API", "Presentation\MyaiCoach.API\MyaiCoach.API.csproj", "{16066BE1-CC81-4242-B7D8-997517E292E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyaiCoach.Infrastructure", "Infrastructure\MyaiCoach.Infrastructure\MyaiCoach.Infrastructure.csproj", "{A5E600B4-B0A7-41DB-BE35-83AD21E6FE94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyaiCoach.Persistance", "Infrastructure\MyaiCoach.Persistance\MyaiCoach.Persistance.csproj", "{D0E038AB-A032-4B74-A666-18D65FC81370}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyaiCoach.Application", "Core\MyaiCoach.Application\MyaiCoach.Application.csproj", "{99350395-CF64-475D-9299-D101A13A25BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyaiCoach.Domain", "Core\MyaiCoach.Domain\MyaiCoach.Domain.csproj", "{B8BDAEB1-FA86-4698-95BB-F66514ABF874}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16066BE1-CC81-4242-B7D8-997517E292E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16066BE1-CC81-4242-B7D8-997517E292E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16066BE1-CC81-4242-B7D8-997517E292E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16066BE1-CC81-4242-B7D8-997517E292E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5E600B4-B0A7-41DB-BE35-83AD21E6FE94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5E600B4-B0A7-41DB-BE35-83AD21E6FE94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5E600B4-B0A7-41DB-BE35-83AD21E6FE94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5E600B4-B0A7-41DB-BE35-83AD21E6FE94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0E038AB-A032-4B74-A666-18D65FC81370}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0E038AB-A032-4B74-A666-18D65FC81370}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0E038AB-A032-4B74-A666-18D65FC81370}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0E038AB-A032-4B74-A666-18D65FC81370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99350395-CF64-475D-9299-D101A13A25BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99350395-CF64-475D-9299-D101A13A25BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99350395-CF64-475D-9299-D101A13A25BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99350395-CF64-475D-9299-D101A13A25BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8BDAEB1-FA86-4698-95BB-F66514ABF874}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8BDAEB1-FA86-4698-95BB-F66514ABF874}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8BDAEB1-FA86-4698-95BB-F66514ABF874}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8BDAEB1-FA86-4698-95BB-F66514ABF874}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{16066BE1-CC81-4242-B7D8-997517E292E1} = {9C443E26-D4A5-487F-B4DD-796E43852D26}
+		{A5E600B4-B0A7-41DB-BE35-83AD21E6FE94} = {2D0E47B4-B526-4668-8736-706330525C19}
+		{D0E038AB-A032-4B74-A666-18D65FC81370} = {2D0E47B4-B526-4668-8736-706330525C19}
+		{99350395-CF64-475D-9299-D101A13A25BA} = {C1EDB097-728A-411B-8E4A-FF1C2D379CD0}
+		{B8BDAEB1-FA86-4698-95BB-F66514ABF874} = {C1EDB097-728A-411B-8E4A-FF1C2D379CD0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F222AB3D-B54C-474E-B7E1-BE2DA63AF433}
