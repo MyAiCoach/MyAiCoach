@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyaiCoach.Application.Repositories
 {
-    public interface IRepository<T> where : class
+    public interface IRepository<T> where T : class
     {
         DbSet<T> Table{ get; }
     }

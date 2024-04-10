@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\MyaiCoach.Application\MyaiCoach.Application.csproj" />
     <ProjectReference Include="..\..\Core\MyaiCoach.Domain\MyaiCoach.Domain.csproj" />
   </ItemGroup>
 
