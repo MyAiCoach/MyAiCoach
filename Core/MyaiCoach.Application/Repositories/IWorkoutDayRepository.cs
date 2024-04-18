@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyaiCoach.Domain.Entities.Common;
+﻿using MyaiCoach.Application.Repositories.Common;
+using MyaiCoach.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyaiCoach.Application.Repositories
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IWorkoutDayRepository : IRepository<WorkoutDay>
     {
-        DbSet<T> Table{ get; }
     }
 }

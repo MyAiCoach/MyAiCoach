@@ -34,6 +34,23 @@ namespace MyaiCoach.Persistance.Contexts
             return base.SaveChangesAsync(cancellationToken);
         }
 
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            var datas = ChangeTracker.Entries<BaseEntity>();
+
+            foreach (var data in datas)
+            {
+                _ = data.State switch
+                {
+                    EntityState.Added => data.Entity.CreatedTime = DateTime.UtcNow,
+                    EntityState.Modified => data.Entity.UpdatedTime = DateTime.UtcNow,
+                    _ => DateTime.UtcNow
+                };
+            }
+
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
 
     }
 }
