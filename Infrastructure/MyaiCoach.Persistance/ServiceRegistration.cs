@@ -26,20 +26,20 @@ namespace MyaiCoach.Persistance
         {
             services.AddDbContext<ApiContext>(option => option.UseNpgsql(GetConnectionString.GetConnection()));
 
-            services.AddScoped<IAppUserReadRepository, AppUserReadRepository>();
-            services.AddScoped<IAppUserWriteRepository, AppUserWriteRepository>();
+            //services.AddScoped<IAppUserReadRepository, AppUserReadRepository>();
+            //services.AddScoped<IAppUserWriteRepository, AppUserWriteRepository>();
 
-            services.AddScoped<IExerciseReadRepository, ExerciseReadRepository>();
-            services.AddScoped<IExerciseWriteRepository, ExerciseWriteRepository>();
+            //services.AddScoped<IExerciseReadRepository, ExerciseReadRepository>();
+            //services.AddScoped<IExerciseWriteRepository, ExerciseWriteRepository>();
 
-            services.AddScoped<ISetRepReadRepository, SetRepReadRepository>();
-            services.AddScoped<ISetRepWriteRepository, SetRepWriteRepository>();
+            //services.AddScoped<ISetRepReadRepository, SetRepReadRepository>();
+            //services.AddScoped<ISetRepWriteRepository, SetRepWriteRepository>();
 
-            services.AddScoped<IWorkoutDayReadRepository, WorkoutDayReadRepository>();
-            services.AddScoped<IWorkoutDayWriteRepository, WorkoutDayWriteRepository>();
+            //services.AddScoped<IWorkoutDayReadRepository, WorkoutDayReadRepository>();
+            //services.AddScoped<IWorkoutDayWriteRepository, WorkoutDayWriteRepository>();
 
-            services.AddScoped<IWorkoutSessionReadRepository, WorkoutSessionReadRepository>();
-            services.AddScoped<IWorkoutSessionWriteRepository, WorkoutSessionWriteRepository>();
+            //services.AddScoped<IWorkoutSessionReadRepository, WorkoutSessionReadRepository>();
+            //services.AddScoped<IWorkoutSessionWriteRepository, WorkoutSessionWriteRepository>();
         }
     }
 }

@@ -12,11 +12,8 @@ namespace MyaiCoach.Persistance.Contexts
 
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
-
         public DbSet<SetRep> SetReps { get; set; }
-
         public DbSet<WorkoutDay> WorkoutDays { get; set; }
-
         public DbSet<WorkoutSession> WorkoutSessions { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
