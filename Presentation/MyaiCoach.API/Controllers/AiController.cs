@@ -16,21 +16,7 @@ namespace MyaiCoach.API.Controllers
             _aiServices = aiServices;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CompleteSentenceAdvance(string sentence)
-        {
-            var response = await _aiServices.CompleteSentenceAdvanceAsync(sentence);
 
-            return Ok(response);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CompleteSentence(string text)
-        {
-            var response = await _aiServices.CompleteSentenceAsync(text);
-
-            return Ok(response);
-        }
 
         [HttpPost]
         public async Task<IActionResult> ChatConversation([FromBody] OpenAIRequest request)
@@ -40,13 +26,6 @@ namespace MyaiCoach.API.Controllers
             return Ok(response);
          }
 
-        [HttpPost]
-        public async Task<IActionResult> ChatCompletion(string text)
-        {
-            var response = await _aiServices.CreateChatCompletionAsync(text);
-
-            return Ok(response);
-        }
 
         public class OpenAIRequest
         {

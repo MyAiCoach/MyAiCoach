@@ -8,9 +8,6 @@ namespace MyaiCoach.Application.Services
 {
     public interface IAiServices
     {
-        Task<string> CompleteSentenceAsync(string text);
-        Task<string> CompleteSentenceAdvanceAsync(string text);
         Task<string> ConversationAsync(string text);
-        Task<string> CreateChatCompletionAsync(string text);
     }
 }

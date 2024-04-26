@@ -24,32 +24,6 @@ namespace MyaiCoach.Infrastructure.Services
             _openAIAPI = new OpenAIAPI(_configuration["OpenAI:Key"]);
         }
 
-        public async Task<string> CompleteSentenceAdvanceAsync(string text)
-        {
-            var result = await _openAIAPI.Completions.CreateCompletionAsync(
-                new CompletionRequest()
-                {
-                    Prompt = text,
-                    Model  =Model.DefaultModel,
-                    Temperature = 0.1,
-                });
-
-            var stringBuilder = new StringBuilder();
-
-            for (int i = 0; i < result.Completions.Count; i++)
-            {
-                var x = result.Completions[i].Text.Trim();
-
-                stringBuilder.Append($" {x}");
-            }
-
-            return stringBuilder.ToString();
-        }
-
-        public async Task<string> CompleteSentenceAsync(string text)
-        {
-            return await _openAIAPI.Completions.GetCompletion(text);
-        }
 
         public async Task<string> ConversationAsync(string text)
         {
@@ -70,30 +44,5 @@ namespace MyaiCoach.Infrastructure.Services
 
         }
 
-        public async Task<string> CreateChatCompletionAsync(string text)
-        {
-
-            var results = await _openAIAPI.Chat.CreateChatCompletionAsync(new ChatRequest()
-            {
-                Model = Model.ChatGPTTurbo,
-                Temperature = 0.1,
-                MaxTokens = 50,
-                Messages = new ChatMessage[]
-                {
-                    new ChatMessage(ChatMessageRole.User, text)
-                }
-            });
-
-            var stringBuilder = new StringBuilder();
-
-            for (int i = 0; i < results.Choices.Count; i++)
-            {
-                var x = results.Choices[i].Message.Content.Trim();
-
-                stringBuilder.Append($" {x}");
-            }
-
-            return stringBuilder.ToString();
-        }
     }
 }
