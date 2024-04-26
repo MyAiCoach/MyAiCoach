@@ -11,5 +11,8 @@ namespace MyaiCoach.Domain.Entities
     {
         public int Set { get; set; }
         public int Rep { get; set; }
+
+        public virtual ICollection<WorkoutSession> WorkoutSessions { get; set; }
+
     }
 }

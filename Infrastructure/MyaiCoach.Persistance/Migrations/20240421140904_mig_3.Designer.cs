@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyaiCoach.Persistance.Contexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MyaiCoach.Persistance.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    partial class ApiContextModelSnapshot : ModelSnapshot
+    [Migration("20240421140904_mig_3")]
+    partial class mig_3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,13 +173,13 @@ namespace MyaiCoach.Persistance.Migrations
             modelBuilder.Entity("MyaiCoach.Domain.Entities.WorkoutSession", b =>
                 {
                     b.HasOne("MyaiCoach.Domain.Entities.Exercise", "Exercise")
-                        .WithMany("WorkoutSessions")
+                        .WithMany()
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MyaiCoach.Domain.Entities.SetRep", "SetRep")
-                        .WithMany("WorkoutSessions")
+                        .WithMany()
                         .HasForeignKey("SetRepId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -193,16 +196,6 @@ namespace MyaiCoach.Persistance.Migrations
             modelBuilder.Entity("MyaiCoach.Domain.Entities.AppUser", b =>
                 {
                     b.Navigation("WorkoutDays");
-                });
-
-            modelBuilder.Entity("MyaiCoach.Domain.Entities.Exercise", b =>
-                {
-                    b.Navigation("WorkoutSessions");
-                });
-
-            modelBuilder.Entity("MyaiCoach.Domain.Entities.SetRep", b =>
-                {
-                    b.Navigation("WorkoutSessions");
                 });
 
             modelBuilder.Entity("MyaiCoach.Domain.Entities.WorkoutDay", b =>

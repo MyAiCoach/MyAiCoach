@@ -12,5 +12,9 @@ namespace MyaiCoach.Domain.Entities
     {
         public Guid ExerciseId { get; set; }
         public Guid SetRepId { get; set; }
+
+
+        public virtual Exercise Exercise { get; set; }
+        public virtual SetRep SetRep { get; set; }
     }
 }

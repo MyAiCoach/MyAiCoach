@@ -14,5 +14,9 @@ namespace MyaiCoach.Domain.Entities
 
         public string TargetArea { get; set; }
 
+
+        public virtual ICollection<WorkoutSession> WorkoutSessions { get; set; }
+
+
     }
 }

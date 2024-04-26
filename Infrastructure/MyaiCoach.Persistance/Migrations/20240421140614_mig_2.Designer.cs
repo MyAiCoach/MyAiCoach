@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyaiCoach.Persistance.Contexts;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MyaiCoach.Persistance.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    partial class ApiContextModelSnapshot : ModelSnapshot
+    [Migration("20240421140614_mig_2")]
+    partial class mig_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,10 +150,6 @@ namespace MyaiCoach.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ExerciseId");
-
-                    b.HasIndex("SetRepId");
-
                     b.HasIndex("WorkoutDayId");
 
                     b.ToTable("WorkoutSessions");
@@ -169,40 +168,14 @@ namespace MyaiCoach.Persistance.Migrations
 
             modelBuilder.Entity("MyaiCoach.Domain.Entities.WorkoutSession", b =>
                 {
-                    b.HasOne("MyaiCoach.Domain.Entities.Exercise", "Exercise")
-                        .WithMany("WorkoutSessions")
-                        .HasForeignKey("ExerciseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyaiCoach.Domain.Entities.SetRep", "SetRep")
-                        .WithMany("WorkoutSessions")
-                        .HasForeignKey("SetRepId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MyaiCoach.Domain.Entities.WorkoutDay", null)
                         .WithMany("WorkoutSessions")
                         .HasForeignKey("WorkoutDayId");
-
-                    b.Navigation("Exercise");
-
-                    b.Navigation("SetRep");
                 });
 
             modelBuilder.Entity("MyaiCoach.Domain.Entities.AppUser", b =>
                 {
                     b.Navigation("WorkoutDays");
-                });
-
-            modelBuilder.Entity("MyaiCoach.Domain.Entities.Exercise", b =>
-                {
-                    b.Navigation("WorkoutSessions");
-                });
-
-            modelBuilder.Entity("MyaiCoach.Domain.Entities.SetRep", b =>
-                {
-                    b.Navigation("WorkoutSessions");
                 });
 
             modelBuilder.Entity("MyaiCoach.Domain.Entities.WorkoutDay", b =>
