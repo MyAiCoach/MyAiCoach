@@ -9,8 +9,8 @@ namespace MyaiCoach.Domain.Entities
 {
     public class SetRep : BaseEntity
     {
-        public int Set { get; set; }
-        public int Rep { get; set; }
+        public string Set { get; set; }
+        public string Rep { get; set; }
 
         public virtual ICollection<WorkoutSession> WorkoutSessions { get; set; }
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyaiCoach.Application.Services;
 using MyaiCoach.Domain.Dtos;
+using Newtonsoft.Json;
 
 namespace MyaiCoach.API.Controllers
 {
@@ -21,6 +22,7 @@ namespace MyaiCoach.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Save(string id, List<ProgramViewDto> input)
         {
+
             var result = await _userExerciseService.SaveWorkoutAsync(Guid.Parse(id), input);
 
             return Ok(result);

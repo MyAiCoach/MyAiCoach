@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using MyaiCoach.Application.Const;
 using MyaiCoach.Application.Services;
+using MyaiCoach.Domain.Dtos;
+using Newtonsoft.Json;
 using OpenAI_API;
 using OpenAI_API.Chat;
 using OpenAI_API.Completions;
@@ -25,7 +27,7 @@ namespace MyaiCoach.Infrastructure.Services
         }
 
 
-        public async Task<string> ConversationAsync(string text)
+        public async Task<List<ProgramViewDto>> ConversationAsync(string text)
         {
             var chat = _openAIAPI.Chat.CreateConversation();
             
@@ -40,7 +42,12 @@ namespace MyaiCoach.Infrastructure.Services
                 stringBuilder.Append(res);
             }
 
-            return stringBuilder.ToString();
+            var result =  stringBuilder.ToString();
+
+
+            var data = JsonConvert.DeserializeObject<List<ProgramViewDto>>(result);
+
+            return data;
 
         }
 

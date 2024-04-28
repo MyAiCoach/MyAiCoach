@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyaiCoach.Domain.Dtos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace MyaiCoach.Application.Services
 {
     public interface IAiServices
     {
-        Task<string> ConversationAsync(string text);
+        Task<List<ProgramViewDto>> ConversationAsync(string text);
     }
 }

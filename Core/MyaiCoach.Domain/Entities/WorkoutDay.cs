@@ -1,11 +1,5 @@
 ﻿using MyaiCoach.Domain.Entities.Common;
 using MyaiCoach.Domain.Enums;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyaiCoach.Domain.Entities
 {
@@ -14,6 +8,7 @@ namespace MyaiCoach.Domain.Entities
         public Days Days { get; set; }
         public ICollection<Guid> WorkoutSessionsIds { get; set; }
         public Guid AppUserId { get; set; }
+        public DoesItWorks DoesItWorks { get; set; }
 
 
         public virtual AppUser AppUser { get; set; }

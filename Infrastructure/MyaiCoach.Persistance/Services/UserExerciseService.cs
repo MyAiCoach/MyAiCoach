@@ -123,7 +123,7 @@ namespace MyaiCoach.Persistance.Services
 
                 foreach (var setRep in workDay.SetReps)
                 {
-                    var checkSetRep = await _setRepRepository.GetSingleAsync(sr => sr.Set == setRep.Set && sr.Rep == setRep.Rep);
+                    var checkSetRep = await _setRepRepository.GetSingleAsync(sr => sr.Set.Equals(setRep.Set) && sr.Rep.Equals(setRep.Rep));
                     if (checkSetRep == null)
                     {
                         var add = await _setRepRepository.AddAsync(new()
