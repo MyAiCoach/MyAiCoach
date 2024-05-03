@@ -27,6 +27,7 @@ namespace MyaiCoach.API.Controllers
             };
 
             var result = await _appUserRepository.AddAsync(newUser);
+            _ = await _appUserRepository.SaveAsync();
 
             return Ok(result);
         }

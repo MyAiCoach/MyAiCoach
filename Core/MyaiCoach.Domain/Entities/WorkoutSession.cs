@@ -12,9 +12,10 @@ namespace MyaiCoach.Domain.Entities
     {
         public Guid ExerciseId { get; set; }
         public Guid SetRepId { get; set; }
-
+        public Guid WorkoutDayId { get; set; }
 
         public virtual Exercise Exercise { get; set; }
         public virtual SetRep SetRep { get; set; }
+        public virtual ICollection<WorkoutDay> WorkoutDays { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MyaiCoach.Application.Exceptions;
+﻿using Microsoft.EntityFrameworkCore;
+using MyaiCoach.Application.Exceptions;
 using MyaiCoach.Application.Repositories;
 using MyaiCoach.Application.Services;
 using MyaiCoach.Domain.Dtos;
@@ -39,7 +40,7 @@ namespace MyaiCoach.Persistance.Services
             if (userId == Guid.Empty)
                 throw new ArgumentNullException(nameof(userId), "UserId must be exist");
 
-            var getUser = _userRepository.GetSingleAsync(u => u.Id == userId);
+            var getUser = _userRepository.GetSingleAsync(u => u.Id == userId).Result;
 
             if (getUser == null)
                 throw new UserNotFoundException($"{userId} user no is empty");
@@ -51,24 +52,22 @@ namespace MyaiCoach.Persistance.Services
 
             foreach (var days in input)
             {
-                var sessionIds = new List<Guid>();
-
                 for (var i = 0; i < days.Exercises.Count; i++)
                 {
                     var currentExercise = days.Exercises[i];
                     var currentSetRep = days.SetReps[i];
 
 
-                    var getExercise = _exerciseRepository.GetSingleAsync(e => e.Name == currentExercise.Name);
+                    var getExercise = _exerciseRepository.Table.FirstOrDefaultAsync(e => e.Name == currentExercise.Name);
                     if (getExercise == null)
                         continue;
 
-                    var getSetRep = _setRepRepository.GetSingleAsync(sr => sr.Set == currentSetRep.Set && sr.Rep == currentSetRep.Rep);
+                    var getSetRep = _setRepRepository.Table.FirstOrDefaultAsync(sr => sr.Set == currentSetRep.Set && sr.Rep == currentSetRep.Rep);
                     if (getSetRep == null)
                         continue;
 
-                    var workoutSession = await _workoutSessionRepository.GetSingleAsync(
-                        w => w.SetRepId == getSetRep.Result.Id &&
+                    var workoutSession = await _workoutSessionRepository.Table.FirstOrDefaultAsync(
+                          w => w.SetRepId == getSetRep.Result.Id &&
                              w.ExerciseId == getExercise.Result.Id);
 
                     if (workoutSession == null)
@@ -76,29 +75,32 @@ namespace MyaiCoach.Persistance.Services
                         workoutSession = new WorkoutSession()
                         {
                             ExerciseId = getExercise.Result.Id,
-                            SetRepId = getSetRep.Result.Id
+                            SetRepId = getSetRep.Result.Id,
+                            
                         };
                         _ = await _workoutSessionRepository.AddAsync(workoutSession);
                     }
 
-                    sessionIds.Add(workoutSession.Id);
-                }
-                
+                    var addWorkoutDay = new WorkoutDay()
+                    {
+                        AppUserId = getUser.Id,
+                        Days = days.Day,
+                        WorkoutSessionId = workoutSession.Id,
+                    };
+                    var result = await _workoutDayRepository.AddAsync(addWorkoutDay);
+                    _ = await _workoutDayRepository.SaveAsync();
 
-                var addWorkoutDay = await _workoutDayRepository.AddAsync(new()
-                {
-                    AppUserId = getUser.Result.Id,
-                    Days = days.Day,
-                    WorkoutSessionsIds = sessionIds
-                });
 
-                if (!addWorkoutDay)
-                {
-                    return false;
-                }
+                    // for workoutSession table 
+                    workoutSession.WorkoutDayId = addWorkoutDay.Id;
+                    _ = _workoutSessionRepository.Update(workoutSession);
+                    _ = _workoutSessionRepository.Save();
+
+
+                    if (!result)
+                        return false;
+                }   
             }
-
-
             return true;
         }
 
@@ -109,7 +111,7 @@ namespace MyaiCoach.Persistance.Services
             {
                 foreach (var exercises in workDay.Exercises)
                 {
-                    var checkExercise = await _exerciseRepository.GetSingleAsync(e => e.Name == exercises.Name);
+                    var checkExercise = await _exerciseRepository.Table.FirstOrDefaultAsync(e => e.Name == exercises.Name);
                     if (checkExercise == null)
                     {
                         var add = await _exerciseRepository.AddAsync(new()
@@ -118,23 +120,27 @@ namespace MyaiCoach.Persistance.Services
                             Description = exercises.Description,
                             TargetArea = exercises.TargetArea,
                         });
+                        _ = await _exerciseRepository.SaveAsync();
+
                     }
                 }
 
                 foreach (var setRep in workDay.SetReps)
                 {
-                    var checkSetRep = await _setRepRepository.GetSingleAsync(sr => sr.Set.Equals(setRep.Set) && sr.Rep.Equals(setRep.Rep));
-                    if (checkSetRep == null)
+                    var checkSetRep = _setRepRepository.Table.FirstOrDefaultAsync(sr => sr.Set.Equals(setRep.Set) && sr.Rep.Equals(setRep.Rep));
+                    if (checkSetRep.Result == null)
                     {
                         var add = await _setRepRepository.AddAsync(new()
                         {
                             Set = setRep.Set,
                             Rep = setRep.Rep,
                         });
+                        _ = await _exerciseRepository.SaveAsync();
+
                     }
                 }
             }
-
+            
             return true;
         }
     }

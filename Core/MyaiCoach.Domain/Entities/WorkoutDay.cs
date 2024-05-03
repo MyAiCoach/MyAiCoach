@@ -6,7 +6,7 @@ namespace MyaiCoach.Domain.Entities
     public class WorkoutDay : BaseEntity
     {
         public Days Days { get; set; }
-        public ICollection<Guid> WorkoutSessionsIds { get; set; }
+        public Guid WorkoutSessionId { get; set; }
         public Guid AppUserId { get; set; }
         public DoesItWorks DoesItWorks { get; set; }
 

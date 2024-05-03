@@ -44,9 +44,12 @@ namespace MyaiCoach.Persistance.Repositories.Common
             return await Table.FirstOrDefaultAsync(x => x.Id == Guid.Parse(id));
         }
 
-        public async Task<T?> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true)
+        public async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true)
         {
-            return await Table.FirstOrDefaultAsync(method);
+            var query = Table.AsQueryable();
+            if (!tracking)
+                query = query.AsNoTracking();
+            return await query.FirstOrDefaultAsync(method) ?? throw new ArgumentException(nameof(T));
         }
 
         public IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true)
