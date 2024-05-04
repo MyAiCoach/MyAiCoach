@@ -1,5 +1,6 @@
 using MyaiCoach.Infrastructure;
 using MyaiCoach.Persistance;
+using MyaiCoach.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddPersistance();
 builder.Services.AddInfrastructure();
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 

@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MyaiCoach.Application.Features.Command.AiCommand.ChatConversationAi;
 using MyaiCoach.Application.Services;
+using MyaiCoach.Domain.Dtos;
+using MyaiCoach.Domain.Dtos.Ai;
 using MyaiCoach.Infrastructure.Services;
 
 namespace MyaiCoach.API.Controllers
@@ -9,28 +13,24 @@ namespace MyaiCoach.API.Controllers
     [ApiController]
     public class AiController : ControllerBase
     {
-        private readonly IAiServices _aiServices;
+        private readonly IMediator _mediator;
 
-        public AiController(IAiServices aiServices)
+        public AiController(IMediator mediator)
         {
-            _aiServices = aiServices;
+            _mediator = mediator;
         }
-
-
 
         [HttpPost]
-        public async Task<IActionResult> ChatConversation([FromBody] OpenAIRequest request)
+        public async Task<IActionResult> ChatConversation([FromBody] ChatConversationAiRequest request)
         {
-            var response = await _aiServices.ConversationAsync(request.Input);
+            if(request == null)
+                throw new ArgumentNullException(nameof(request));
 
-            return Ok(response);
+            ChatConversationAiResponse response = await _mediator.Send(request);
+
+            return Ok(response.ProgramViewDtos);
          }
 
-
-        public class OpenAIRequest
-        {
-            public string Input { get; set; }
-        }
     }
 
 }
