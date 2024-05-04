@@ -11,5 +11,8 @@ namespace MyaiCoach.Application.Services
     {
 
         Task<bool> SaveWorkoutAsync(Guid userId, List<ProgramViewDto> input);
+
+        Task<List<ProgramViewDto>> GetWorkoutProgramAsync(Guid userId);
+
     }
 }

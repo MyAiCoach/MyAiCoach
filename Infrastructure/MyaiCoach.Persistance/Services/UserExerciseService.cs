@@ -3,6 +3,7 @@ using MyaiCoach.Application.Exceptions;
 using MyaiCoach.Application.Repositories;
 using MyaiCoach.Application.Services;
 using MyaiCoach.Domain.Dtos;
+using MyaiCoach.Domain.Dtos.ExerciseDtos;
 using MyaiCoach.Domain.Entities;
 using MyaiCoach.Domain.Enums;
 using MyaiCoach.Persistance.Repositories;
@@ -30,6 +31,56 @@ namespace MyaiCoach.Persistance.Services
             _setRepRepository = setRepRepository;
             _workoutDayRepository = workoutDayRepository;
             _workoutSessionRepository = workoutSessionRepository;
+        }
+
+        public async Task<List<ProgramViewDto>> GetWorkoutProgramAsync(Guid userId)
+        {
+            if(userId == Guid.Empty)
+                throw new ArgumentNullException(nameof(userId), "UserId must be exist");
+
+            var result = new List<ProgramViewDto>();
+
+
+            var getWorkoutDays =  _workoutDayRepository.GetWhere(w => w.AppUserId == userId).ToList();
+            if (getWorkoutDays == null)
+                throw new UserNotFoundException($"{userId} user no is empty");
+
+            foreach (var dayGroup in getWorkoutDays.GroupBy(w => w.Days))
+            {
+                var dayProgram = new ProgramViewDto
+                {
+                    Day = dayGroup.Key,
+                    Exercises = new List<ExerciseViewDto>(),
+                    SetReps = new List<SetRepViewDto>()
+                };
+
+                foreach (var workoutDay in dayGroup)
+                {
+                    var getWorkoutSession = await _workoutSessionRepository.Table.FirstOrDefaultAsync(w => w.Id == workoutDay.WorkoutSessionId);
+
+                    if (getWorkoutSession == null)
+                        continue; // or handle the situation accordingly
+
+                    var getExercise = await _exerciseRepository.Table.FirstOrDefaultAsync(e => e.Id == getWorkoutSession.ExerciseId);
+                    dayProgram.Exercises.Add(new ExerciseViewDto
+                    {
+                        Name = getExercise.Name,
+                        Description = getExercise.Description,
+                        TargetArea = getExercise.TargetArea,
+                    });
+
+                    var getSetRep = await _setRepRepository.Table.FirstOrDefaultAsync(sr => sr.Id == getWorkoutSession.SetRepId);
+                    dayProgram.SetReps.Add(new SetRepViewDto
+                    {
+                        Set = getSetRep.Set,
+                        Rep = getSetRep.Rep,
+                    });
+                }
+
+                result.Add(dayProgram);
+            }
+
+            return result;
         }
 
         public async Task<bool> SaveWorkoutAsync(Guid userId, List<ProgramViewDto> input)
