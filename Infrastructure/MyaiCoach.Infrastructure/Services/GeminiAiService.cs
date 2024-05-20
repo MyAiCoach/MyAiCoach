@@ -23,61 +23,45 @@ namespace MyaiCoach.Infrastructure.Services
 
         public async Task<List<ProgramViewDto>> ConversationAsync(string text)
         {
-            var apiKey = _configuration["APIKey"];
-            var url = $"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={apiKey}";
+            string googleApiKey = "ApiKey";
+        string apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + googleApiKey;
+        Console.Write("Input : ");
+        string requestBody = $@"{{
+            ""contents"": [
+                {{
+                    ""parts"":[
+                        {{
+                            ""text"": ""{text}""
+                        }}
+                    ]
+                }}
+            ]
+        }}";
 
-            var requestBody = new
+        try
+        {
+            using (HttpClient client = new HttpClient())
             {
-                contents = new[]
-                {
-                    new
-                    {
-                        parts = new[]
-                        {
-                            new
-                            {
-                                text = text
-                            }
-                        }
-                    }
-                }
-            };
+                var content = new StringContent(requestBody, Encoding.UTF8, "application/json");
 
-            var json = JsonConvert.SerializeObject(requestBody);
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync(apiUrl, content);
 
-            try
-            {
-                var response = await _httpClient.PostAsync(url, httpContent);
-                Console.Write(response);
                 if (response.IsSuccessStatusCode)
                 {
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    
-                    var resultList = new List<ProgramViewDto>
-                    {
-                        new ProgramViewDto{}
-                    };
-                    return resultList;
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine(responseContent);
                 }
                 else
                 {
-                    Console.WriteLine($"Error: {response.StatusCode}");
-                    var errorContent = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine("Error Details: " + errorContent);
-
-                    
-                    return new List<ProgramViewDto>();
+                    Console.WriteLine("Failed to get response. Status code: " + response.StatusCode);
                 }
             }
-            catch (HttpRequestException e)
-            {
-                Console.WriteLine("\nException Caught!");
-                Console.WriteLine("Message :{0} ", e.Message);
-
-                // Hata durumunda boş bir liste döndür
-                return new List<ProgramViewDto>();
-            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Exception occurred: " + ex.Message);
+        }
+        return new List<ProgramViewDto>();
         }
     }
 }
