@@ -13,7 +13,7 @@ namespace MyaiCoach.Domain.Entities
         public Guid GramId { get; set; }
         public Guid NutritionDayId { get; set; }
 
-        public virtual Food Fodd { get; set; }
+        public virtual Food Food { get; set; }
         public virtual Gram Gram { get; set; }
         public virtual ICollection<NutritionDay> NutritionDays { get; set;}
 
