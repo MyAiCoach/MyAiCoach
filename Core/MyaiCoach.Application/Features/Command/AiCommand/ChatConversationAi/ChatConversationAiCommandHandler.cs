@@ -19,7 +19,7 @@ namespace MyaiCoach.Application.Features.Command.AiCommand.ChatConversationAi
 
         public async Task<ChatConversationAiResponse> Handle(ChatConversationAiRequest request, CancellationToken cancellationToken)
         {
-            var response = await _aiServices.ConversationAsync(request.Input);
+            var response = await _aiServices.ConversationAsync(request.Input, request.ReguestType);
 
             return new()
             {

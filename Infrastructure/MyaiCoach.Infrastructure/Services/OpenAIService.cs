@@ -2,6 +2,8 @@
 using MyaiCoach.Application.Const;
 using MyaiCoach.Application.Services;
 using MyaiCoach.Domain.Dtos;
+using MyaiCoach.Domain.Dtos.Base;
+using MyaiCoach.Domain.Enums;
 using Newtonsoft.Json;
 using OpenAI_API;
 using OpenAI_API.Chat;
@@ -27,27 +29,38 @@ namespace MyaiCoach.Infrastructure.Services
         }
 
 
-        public async Task<List<ProgramViewDto>> ConversationAsync(string text)
+        public async Task<IEnumerable<IBaseViewDto>> ConversationAsync(string text, ReqType reqType)
         {
             var chat = _openAIAPI.Chat.CreateConversation();
-            
-            chat.AppendSystemMessage(Messages.WhoAmI);
+
+
+            if (reqType == ReqType.Workout)
+                chat.AppendSystemMessage(Messages.Workout);
+            else
+                chat.AppendSystemMessage(Messages.Nutrition);
 
             chat.AppendUserInput(text);
 
             var stringBuilder = new StringBuilder();
 
             await foreach (var res in chat.StreamResponseEnumerableFromChatbotAsync())
-            {
+                {
                 stringBuilder.Append(res);
             }
 
-            var result =  stringBuilder.ToString();
+            var result = stringBuilder.ToString();
 
 
-            var data = JsonConvert.DeserializeObject<List<ProgramViewDto>>(result);
+            IEnumerable<IBaseViewDto> data;
 
-            return data;
+            if (reqType == ReqType.Workout)
+                data = JsonConvert.DeserializeObject<List<ProgramViewDto>>(result);
+            else
+                data = JsonConvert.DeserializeObject<List<DietProgramViewDto>>(result);
+
+
+
+            return data ?? throw new InvalidOperationException("Ai response is invalid.");
 
         }
 

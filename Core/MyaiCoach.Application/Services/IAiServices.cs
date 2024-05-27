@@ -1,4 +1,6 @@
 ﻿using MyaiCoach.Domain.Dtos;
+using MyaiCoach.Domain.Dtos.Base;
+using MyaiCoach.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ namespace MyaiCoach.Application.Services
 {
     public interface IAiServices
     {
-        Task<List<ProgramViewDto>> ConversationAsync(string text);
+        Task<IEnumerable<IBaseViewDto>> ConversationAsync(string text, ReqType reqtype);
+        
     }
 }
