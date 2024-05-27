@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using MyaiCoach.Application.Services;
 using MyaiCoach.Domain.Dtos;
+using MyaiCoach.Domain.Dtos.Base;
+using MyaiCoach.Domain.Enums;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -22,7 +24,7 @@ namespace MyaiCoach.Infrastructure.Services
             _httpClient = new HttpClient();
         }
 
-        public async Task<List<ProgramViewDto>> ConversationAsync(string text)
+        public async Task<List<ProgramViewDto>> ConversationAsync(string text,ReqType reqtypes)
         {
             string dev_text = "You are an expert fitness instructor. You know everything about exercises and diet programs. People will ask you for advice on healthy living, exercise programs, and diet plans. You will give them the most appropriate answers based on the health information they share with you. The person asking the question does not have any health problems. Think of the days as Monday 1, Tuesday 2, ... Sunday 7. You will not deviate from this format. Even if it's the same value, I'll fill in the sets and reps for each move. If possible, I will put it on an off day. I will just follow the format above, ready to add to the table. My format is (you answer me only json data. this is important): [ { \"day\": 1, \"exercises\": [ { \"name\": \"string\", \"description\": \"string\", \"targetArea\": \"string\" } ], \"setReps\": [ { \"set\": 0, \"rep\": 0 } ] } ],";
 
@@ -74,5 +76,13 @@ namespace MyaiCoach.Infrastructure.Services
 
             return new List<ProgramViewDto>();
         }
+
+        public Task<IEnumerable<IBaseViewDto>> ConversationAsync(string text, ReqType reqtype)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
+
+
+    
