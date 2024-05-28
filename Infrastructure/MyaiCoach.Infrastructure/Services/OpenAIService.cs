@@ -2,6 +2,8 @@
 using MyaiCoach.Application.Const;
 using MyaiCoach.Application.Services;
 using MyaiCoach.Domain.Dtos;
+using MyaiCoach.Domain.Dtos.Base;
+using MyaiCoach.Domain.Enums;
 using Newtonsoft.Json;
 using OpenAI_API;
 using OpenAI_API.Chat;
@@ -27,11 +29,15 @@ namespace MyaiCoach.Infrastructure.Services
         }
 
 
-        public async Task<List<ProgramViewDto>> ConversationAsync(string text)
+        public async Task<IEnumerable<IBaseViewDto>> ConversationAsync(string text, ReqType reqtype)
         {
             var chat = _openAIAPI.Chat.CreateConversation();
             
-            chat.AppendSystemMessage(Messages.WhoAmI);
+            if(reqtype == ReqType.Workout)
+                chat.AppendSystemMessage(Messages.Workout);
+
+            else
+                chat.AppendSystemMessage(Messages.Nutrition);
 
             chat.AppendUserInput(text);
 
@@ -45,11 +51,17 @@ namespace MyaiCoach.Infrastructure.Services
             var result =  stringBuilder.ToString();
 
 
-            var data = JsonConvert.DeserializeObject<List<ProgramViewDto>>(result);
+            IEnumerable<IBaseViewDto> data = null;
 
-            return data;
+
+            if (reqtype == ReqType.Workout)
+                JsonConvert.DeserializeObject<List<ProgramViewDto>>(result);
+            else
+                JsonConvert.DeserializeObject<List<DietProgramViewDto>>(result);
+
+
+            return data ?? throw new InvalidOperationException("Data parse not correct!");
 
         }
-
     }
 }

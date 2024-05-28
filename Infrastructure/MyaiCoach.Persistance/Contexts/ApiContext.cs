@@ -16,6 +16,14 @@ namespace MyaiCoach.Persistance.Contexts
         public DbSet<WorkoutDay> WorkoutDays { get; set; }
         public DbSet<WorkoutSession> WorkoutSessions { get; set; }
 
+
+        public DbSet<Food> Foods { get; set; }
+        public DbSet<Gram> Grams { get; set; }
+        public DbSet<NutritionDay>NutritionDays { get; set; }
+        public DbSet<NutritionSession>  NutritionSessions { get; set; }
+        
+
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var datas = ChangeTracker.Entries<BaseEntity>();

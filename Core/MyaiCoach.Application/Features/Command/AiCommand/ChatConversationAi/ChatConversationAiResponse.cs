@@ -1,4 +1,5 @@
 ﻿using MyaiCoach.Domain.Dtos;
+using MyaiCoach.Domain.Dtos.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace MyaiCoach.Application.Features.Command.AiCommand.ChatConversationAi
 {
     public class ChatConversationAiResponse
     {
-        public List<ProgramViewDto> ProgramViewDtos { get; set; }
+        public IEnumerable<IBaseViewDto> ProgramViewDtos { get; set; }
     }
 }
