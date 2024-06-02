@@ -14,4 +14,4 @@ namespace MyaiCoach.Application.Features.Command.AiCommand.ChatConversationAi
         public string Input { get; set; }
         public ReqType ReguestType { get; set; }
     }
-}
+}   

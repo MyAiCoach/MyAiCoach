@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 using MyaiCoach.Application.Const;
 using MyaiCoach.Application.Services;
 using MyaiCoach.Domain.Dtos;
@@ -29,13 +29,13 @@ namespace MyaiCoach.Infrastructure.Services
         }
 
 
-        public async Task<IEnumerable<IBaseViewDto>> ConversationAsync(string text, ReqType reqType)
+        public async Task<IEnumerable<IBaseViewDto>> ConversationAsync(string text, ReqType reqtype)
         {
             var chat = _openAIAPI.Chat.CreateConversation();
-
-
-            if (reqType == ReqType.Workout)
+            
+            if(reqtype == ReqType.Workout)
                 chat.AppendSystemMessage(Messages.Workout);
+
             else
                 chat.AppendSystemMessage(Messages.Nutrition);
 
@@ -44,25 +44,24 @@ namespace MyaiCoach.Infrastructure.Services
             var stringBuilder = new StringBuilder();
 
             await foreach (var res in chat.StreamResponseEnumerableFromChatbotAsync())
-                {
+            {
                 stringBuilder.Append(res);
             }
 
-            var result = stringBuilder.ToString();
+            var result =  stringBuilder.ToString();
 
 
-            IEnumerable<IBaseViewDto> data;
+            IEnumerable<IBaseViewDto> data = null;
 
-            if (reqType == ReqType.Workout)
-                data = JsonConvert.DeserializeObject<List<ProgramViewDto>>(result);
+
+            if (reqtype == ReqType.Workout)
+                JsonConvert.DeserializeObject<List<ProgramViewDto>>(result);
             else
-                data = JsonConvert.DeserializeObject<List<DietProgramViewDto>>(result);
+                JsonConvert.DeserializeObject<List<DietProgramViewDto>>(result);
 
 
-
-            return data ?? throw new InvalidOperationException("Ai response is invalid.");
+            return data ?? throw new InvalidOperationException("Data parse not correct!");
 
         }
-
     }
 }
