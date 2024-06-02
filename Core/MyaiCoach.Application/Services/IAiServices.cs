@@ -1,4 +1,4 @@
-﻿using MyaiCoach.Domain.Dtos;
+using MyaiCoach.Domain.Dtos;
 using MyaiCoach.Domain.Dtos.Base;
 using MyaiCoach.Domain.Enums;
 using System;
