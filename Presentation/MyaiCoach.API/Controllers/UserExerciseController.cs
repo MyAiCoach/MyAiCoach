@@ -32,6 +32,7 @@ namespace MyaiCoach.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(string id)
         {
+
             var result = await _userExerciseService.GetWorkoutProgramAsync(Guid.Parse(id));
 
             return Ok(result);

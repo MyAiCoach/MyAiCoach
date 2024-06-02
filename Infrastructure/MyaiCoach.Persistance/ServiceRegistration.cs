@@ -17,8 +17,6 @@ namespace MyaiCoach.Persistance
             services.AddDbContext<ApiContext>(option => option.UseNpgsql(GetConnectionString.GetConnection()));
 
             services.AddScoped<DbContext, ApiContext>();
-
-            services.AddScoped<IAppUserRepository, AppUserRepository>();
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
             services.AddScoped<ISetRepRepository, SetRepRepository>();
             services.AddScoped<IWorkoutDayRepository, WorkoutDayRepository>();

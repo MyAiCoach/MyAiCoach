@@ -1,16 +1,14 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyaiCoach.Application.Features.Command.AiCommand.ChatConversationAi;
-using MyaiCoach.Application.Services;
-using MyaiCoach.Domain.Dtos;
-using MyaiCoach.Domain.Dtos.Ai;
-using MyaiCoach.Infrastructure.Services;
+using MyaiCoach.Domain.Role;
 
 namespace MyaiCoach.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(Roles = "User")]
     public class AiController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -23,14 +21,15 @@ namespace MyaiCoach.API.Controllers
         [HttpPost]
         public async Task<IActionResult> ChatConversation([FromBody] ChatConversationAiRequest request)
         {
-            if(request == null)
+            if (request == null)
                 throw new ArgumentNullException(nameof(request));
 
             ChatConversationAiResponse response = await _mediator.Send(request);
 
             return Ok(response.ProgramViewDtos);
-         }
-
+        }
     }
+
+
 
 }

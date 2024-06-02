@@ -1,16 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MyaiCoach.Domain.Entities;
 using MyaiCoach.Domain.Entities.Common;
+using MyaiCoach.Domain.Role;
 
 namespace MyaiCoach.Persistance.Contexts
 {
-    public class ApiContext : DbContext
+    public class ApiContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
         public ApiContext(DbContextOptions options) : base(options)
         {
         }
 
-        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<SetRep> SetReps { get; set; }
         public DbSet<WorkoutDay> WorkoutDays { get; set; }
@@ -21,7 +23,7 @@ namespace MyaiCoach.Persistance.Contexts
         public DbSet<Gram> Grams { get; set; }
         public DbSet<NutritionDay>NutritionDays { get; set; }
         public DbSet<NutritionSession>  NutritionSessions { get; set; }
-        
+
 
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

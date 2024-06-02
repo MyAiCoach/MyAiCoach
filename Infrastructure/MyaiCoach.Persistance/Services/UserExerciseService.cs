@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MyaiCoach.Application.Exceptions;
 using MyaiCoach.Application.Repositories;
 using MyaiCoach.Application.Services;
@@ -18,15 +19,15 @@ namespace MyaiCoach.Persistance.Services
     public class UserExerciseService : IUserExerciseService
     {
 
-        private readonly IAppUserRepository _userRepository;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IExerciseRepository _exerciseRepository;
         private readonly ISetRepRepository _setRepRepository;
         private readonly IWorkoutDayRepository _workoutDayRepository;
         private readonly IWorkoutSessionRepository _workoutSessionRepository;
 
-        public UserExerciseService(IAppUserRepository userRepository, IExerciseRepository exerciseRepository, ISetRepRepository setRepRepository, IWorkoutDayRepository workoutDayRepository, IWorkoutSessionRepository workoutSessionRepository)
+        public UserExerciseService(UserManager<AppUser> userManager, IExerciseRepository exerciseRepository, ISetRepRepository setRepRepository, IWorkoutDayRepository workoutDayRepository, IWorkoutSessionRepository workoutSessionRepository)
         {
-            _userRepository = userRepository;
+            _userManager = userManager;
             _exerciseRepository = exerciseRepository;
             _setRepRepository = setRepRepository;
             _workoutDayRepository = workoutDayRepository;
@@ -91,7 +92,7 @@ namespace MyaiCoach.Persistance.Services
             if (userId == Guid.Empty)
                 throw new ArgumentNullException(nameof(userId), "UserId must be exist");
 
-            var getUser = _userRepository.GetSingleAsync(u => u.Id == userId).Result;
+            var getUser = "";
 
             if (getUser == null)
                 throw new UserNotFoundException($"{userId} user no is empty");
@@ -134,7 +135,7 @@ namespace MyaiCoach.Persistance.Services
 
                     var addWorkoutDay = new WorkoutDay()
                     {
-                        AppUserId = getUser.Id,
+                       // AppUserId = getUser.Id,
                         Days = days.Day,
                         WorkoutSessionId = workoutSession.Id,
                     };
