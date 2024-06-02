@@ -11,13 +11,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyaiCoach.API", "Presentation\MyaiCoach.API\MyaiCoach.API.csproj", "{16066BE1-CC81-4242-B7D8-997517E292E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyaiCoach.Infrastructure", "Infrastructure\MyaiCoach.Infrastructure\MyaiCoach.Infrastructure.csproj", "{A5E600B4-B0A7-41DB-BE35-83AD21E6FE94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyaiCoach.Infrastructure", "Infrastructure\MyaiCoach.Infrastructure\MyaiCoach.Infrastructure.csproj", "{A5E600B4-B0A7-41DB-BE35-83AD21E6FE94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyaiCoach.Persistance", "Infrastructure\MyaiCoach.Persistance\MyaiCoach.Persistance.csproj", "{D0E038AB-A032-4B74-A666-18D65FC81370}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyaiCoach.Persistance", "Infrastructure\MyaiCoach.Persistance\MyaiCoach.Persistance.csproj", "{D0E038AB-A032-4B74-A666-18D65FC81370}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyaiCoach.Application", "Core\MyaiCoach.Application\MyaiCoach.Application.csproj", "{99350395-CF64-475D-9299-D101A13A25BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyaiCoach.Application", "Core\MyaiCoach.Application\MyaiCoach.Application.csproj", "{99350395-CF64-475D-9299-D101A13A25BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyaiCoach.Domain", "Core\MyaiCoach.Domain\MyaiCoach.Domain.csproj", "{B8BDAEB1-FA86-4698-95BB-F66514ABF874}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyaiCoach.Domain", "Core\MyaiCoach.Domain\MyaiCoach.Domain.csproj", "{B8BDAEB1-FA86-4698-95BB-F66514ABF874}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

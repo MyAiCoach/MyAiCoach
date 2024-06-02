@@ -36,13 +36,13 @@ namespace MyaiCoach.Persistance.Services
 
         public async Task<List<ProgramViewDto>> GetWorkoutProgramAsync(Guid userId)
         {
-            if(userId == Guid.Empty)
+            if (userId == Guid.Empty)
                 throw new ArgumentNullException(nameof(userId), "UserId must be exist");
 
             var result = new List<ProgramViewDto>();
 
 
-            var getWorkoutDays =  _workoutDayRepository.GetWhere(w => w.AppUserId == userId).ToList();
+            var getWorkoutDays = _workoutDayRepository.GetWhere(w => w.AppUserId == userId).ToList();
             if (getWorkoutDays == null)
                 throw new UserNotFoundException($"{userId} user no is empty");
 
@@ -128,7 +128,7 @@ namespace MyaiCoach.Persistance.Services
                         {
                             ExerciseId = getExercise.Result.Id,
                             SetRepId = getSetRep.Result.Id,
-                            
+
                         };
                         _ = await _workoutSessionRepository.AddAsync(workoutSession);
                     }
@@ -151,7 +151,7 @@ namespace MyaiCoach.Persistance.Services
 
                     if (!result)
                         return false;
-                }   
+                }
             }
             return true;
         }
@@ -192,7 +192,7 @@ namespace MyaiCoach.Persistance.Services
                     }
                 }
             }
-            
+
             return true;
         }
     }

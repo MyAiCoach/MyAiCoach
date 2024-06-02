@@ -13,7 +13,7 @@ namespace MyaiCoach.Infrastructure
     {
         public static void AddInfrastructure(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<IAiServices, OpenAIService>();
+            serviceCollection.AddScoped<IAiServices, GeminiAIService>();
         }
     }
 }
