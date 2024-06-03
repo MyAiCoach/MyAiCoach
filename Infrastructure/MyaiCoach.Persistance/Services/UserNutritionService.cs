@@ -16,15 +16,13 @@ namespace MyaiCoach.Persistance.Services
 {
     public class UserNutritionService:IUserNutritionService
     {
-        private readonly IAppUserRepository _userRepository;
         private readonly IFoodRepository _foodRepository;
         private readonly IGramRepository _gramRepository;
         private readonly INutritionDayRepository _nutritionDayRepository;
         private readonly INutritionSessionRepository _nutritionSessionRepository;
 
-        public UserNutritionService(IAppUserRepository userRepository, IFoodRepository foodRepository, IGramRepository gramRepository, INutritionDayRepository nutritionDayRepository, INutritionSessionRepository nutritionSessionRepository)
+        public UserNutritionService(IFoodRepository foodRepository, IGramRepository gramRepository, INutritionDayRepository nutritionDayRepository, INutritionSessionRepository nutritionSessionRepository)
         {
-            _userRepository = userRepository;
             _foodRepository = foodRepository;
             _gramRepository = gramRepository;
             _nutritionDayRepository = nutritionDayRepository;
@@ -91,7 +89,7 @@ namespace MyaiCoach.Persistance.Services
             if (userId == Guid.Empty)
                 throw new ArgumentNullException(nameof(userId), "UserId must be exist");
 
-            var getUser = _userRepository.GetSingleAsync(u => u.Id == userId).Result;
+            AppUser getUser = null;
 
             if (getUser == null)
                 throw new UserNotFoundException($"{userId} user no is empty");
