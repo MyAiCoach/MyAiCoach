@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MyaiCoach.Application.Exceptions;
 using MyaiCoach.Application.Repositories;
 using MyaiCoach.Application.Services;
@@ -16,13 +17,15 @@ namespace MyaiCoach.Persistance.Services
 {
     public class UserNutritionService:IUserNutritionService
     {
+        private readonly UserManager<AppUser> _userManager;
         private readonly IFoodRepository _foodRepository;
         private readonly IGramRepository _gramRepository;
         private readonly INutritionDayRepository _nutritionDayRepository;
         private readonly INutritionSessionRepository _nutritionSessionRepository;
 
-        public UserNutritionService(IFoodRepository foodRepository, IGramRepository gramRepository, INutritionDayRepository nutritionDayRepository, INutritionSessionRepository nutritionSessionRepository)
+        public UserNutritionService(UserManager<AppUser> userManager, IFoodRepository foodRepository, IGramRepository gramRepository, INutritionDayRepository nutritionDayRepository, INutritionSessionRepository nutritionSessionRepository)
         {
+            _userManager = userManager;
             _foodRepository = foodRepository;
             _gramRepository = gramRepository;
             _nutritionDayRepository = nutritionDayRepository;
@@ -89,7 +92,7 @@ namespace MyaiCoach.Persistance.Services
             if (userId == Guid.Empty)
                 throw new ArgumentNullException(nameof(userId), "UserId must be exist");
 
-            AppUser getUser = null;
+            var getUser = _userManager.Users.FirstOrDefault(u => u.Id == userId);
 
             if (getUser == null)
                 throw new UserNotFoundException($"{userId} user no is empty");

@@ -92,7 +92,7 @@ namespace MyaiCoach.Persistance.Services
             if (userId == Guid.Empty)
                 throw new ArgumentNullException(nameof(userId), "UserId must be exist");
 
-            var getUser = "";
+            var getUser = _userManager.Users.FirstOrDefault(u => u.Id == userId);
 
             if (getUser == null)
                 throw new UserNotFoundException($"{userId} user no is empty");
@@ -135,7 +135,7 @@ namespace MyaiCoach.Persistance.Services
 
                     var addWorkoutDay = new WorkoutDay()
                     {
-                       // AppUserId = getUser.Id,
+                        AppUserId = getUser.Id,
                         Days = days.Day,
                         WorkoutSessionId = workoutSession.Id,
                     };
