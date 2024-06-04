@@ -11,9 +11,9 @@ namespace MyaiCoach.Infrastructure
 {
     public static class ServiceRegistration
     {
-        public static void AddInfrastructure(this IServiceCollection serviceCollection)
+        public static void AddInfrastructureServices(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddScoped<IAiServices, GeminiAIService>();
+            serviceCollection.AddScoped<IAiServices, OpenAIService>();
         }
     }
 }

@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace MyaiCoach.Application.Features.Command.AiCommand.ChatConversationAi
 {
-    public class ChatConversationAiCommandHandler : IRequestHandler<ChatConversationAiRequest, ChatConversationAiResponse>
+    public class WokoutConversationHandler : IRequestHandler<WokoutConversationRequest, WokoutConversationResponse>
     {
         private readonly IAiServices _aiServices;
 
-        public ChatConversationAiCommandHandler(IAiServices aiServices)
+        public WokoutConversationHandler(IAiServices aiServices)
         {
             _aiServices = aiServices;
         }
 
-        public async Task<ChatConversationAiResponse> Handle(ChatConversationAiRequest request, CancellationToken cancellationToken)
+        public async Task<WokoutConversationResponse> Handle(WokoutConversationRequest request, CancellationToken cancellationToken)
         {
-            var response = await _aiServices.ConversationAsync(request.Input, request.ReguestType);
+            var response = await _aiServices.WokoutConversationAsync(request.CreateWorkoutDto);
 
             return new()
             {

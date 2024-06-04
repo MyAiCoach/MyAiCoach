@@ -1,15 +1,13 @@
-using MyaiCoach.Infrastructure;
-using MyaiCoach.Persistance;
-using MyaiCoach.Application;
-using Microsoft.AspNetCore.Identity;
-using MyaiCoach.Persistance.Contexts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using MyaiCoach.Application;
 using MyaiCoach.Domain.Entities;
 using MyaiCoach.Domain.Role;
-using System;
+using MyaiCoach.Infrastructure;
+using MyaiCoach.Persistance;
+using MyaiCoach.Persistance.Contexts;
 using System.Security.Claims;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,8 +28,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddPersistance();
-builder.Services.AddInfrastructure();
 builder.Services.AddApplicationServices();
+builder.Services.AddInfrastructureServices();
 
 builder.Services.AddIdentity<AppUser, AppRole>()
        .AddEntityFrameworkStores<ApiContext>();
@@ -69,6 +67,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowLocalhost");
+
 
 app.UseAuthorization();
 

@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace MyaiCoach.Application.Features.Command.AiCommand.ChatConversationAi
 {
-    public class ChatConversationAiRequest : IRequest<ChatConversationAiResponse>
+    public class WokoutConversationRequest : IRequest<WokoutConversationResponse>
     {
-        public string Input { get; set; }
-        public ReqType ReguestType { get; set; }
+        public CreateWorkoutDto? CreateWorkoutDto { get; set; }
     }
 }   

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyaiCoach.Application.Features.Command.AiCommand.ChatConversationAi
 {
-    public class ChatConversationAiResponse
+    public class WokoutConversationResponse
     {
         public IEnumerable<IBaseViewDto> ProgramViewDtos { get; set; }
     }

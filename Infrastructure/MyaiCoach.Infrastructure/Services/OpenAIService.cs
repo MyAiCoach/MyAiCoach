@@ -2,8 +2,10 @@ using Microsoft.Extensions.Configuration;
 using MyaiCoach.Application.Const;
 using MyaiCoach.Application.Services;
 using MyaiCoach.Domain.Dtos;
+using MyaiCoach.Domain.Dtos.Ai;
 using MyaiCoach.Domain.Dtos.Base;
 using MyaiCoach.Domain.Enums;
+using MyaiCoach.Infrastructure.Utils;
 using Newtonsoft.Json;
 using OpenAI_API;
 using OpenAI_API.Chat;
@@ -28,17 +30,12 @@ namespace MyaiCoach.Infrastructure.Services
             _openAIAPI = new OpenAIAPI(_configuration["OpenAI:Key"]);
         }
 
-
-        public async Task<IEnumerable<IBaseViewDto>> ConversationAsync(string text, ReqType reqtype)
+        public async Task<IEnumerable<IBaseViewDto>> NutritionConversationAsync(CreateNutritionDto input)
         {
             var chat = _openAIAPI.Chat.CreateConversation();
-            
-            if(reqtype == ReqType.Workout)
-                chat.AppendSystemMessage(Messages.Workout);
+            var text = GeneratePrompt.GenerateNutrition(input);
 
-            else
-                chat.AppendSystemMessage(Messages.Nutrition);
-
+            chat.AppendSystemMessage(Messages.Nutrition);
             chat.AppendUserInput(text);
 
             var stringBuilder = new StringBuilder();
@@ -48,20 +45,31 @@ namespace MyaiCoach.Infrastructure.Services
                 stringBuilder.Append(res);
             }
 
-            var result =  stringBuilder.ToString();
+            var result = stringBuilder.ToString();
+            var data = JsonConvert.DeserializeObject<List<DietProgramViewDto>>(result);
 
+            return data;
+        }
 
-            IEnumerable<IBaseViewDto> data = null;
+        public async Task<IEnumerable<IBaseViewDto>> WokoutConversationAsync(CreateWorkoutDto input)
+        {
+            var chat = _openAIAPI.Chat.CreateConversation();
+            var text = GeneratePrompt.GenerateWorkout(input);
 
+            chat.AppendSystemMessage(Messages.Workout);
+            chat.AppendUserInput(text);
 
-            if (reqtype == ReqType.Workout)
-                JsonConvert.DeserializeObject<List<ProgramViewDto>>(result);
-            else
-                JsonConvert.DeserializeObject<List<DietProgramViewDto>>(result);
+            var stringBuilder = new StringBuilder();
 
+            await foreach (var res in chat.StreamResponseEnumerableFromChatbotAsync())
+            {
+                stringBuilder.Append(res);
+            }
 
-            return data ?? throw new InvalidOperationException("Data parse not correct!");
+            var result = stringBuilder.ToString();
+            var data = JsonConvert.DeserializeObject<List<ProgramViewDto>>(result);
 
+            return data;
         }
     }
 }

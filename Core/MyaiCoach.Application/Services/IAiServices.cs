@@ -1,4 +1,5 @@
 using MyaiCoach.Domain.Dtos;
+using MyaiCoach.Domain.Dtos.Ai;
 using MyaiCoach.Domain.Dtos.Base;
 using MyaiCoach.Domain.Enums;
 using System;
@@ -11,7 +12,9 @@ namespace MyaiCoach.Application.Services
 {
     public interface IAiServices
     {
-        Task<IEnumerable<IBaseViewDto>> ConversationAsync(string text, ReqType reqtype);
+        Task<IEnumerable<IBaseViewDto>> WokoutConversationAsync(CreateWorkoutDto input);
+
+        Task<IEnumerable<IBaseViewDto>> NutritionConversationAsync(CreateNutritionDto input);
 
     }
 }
