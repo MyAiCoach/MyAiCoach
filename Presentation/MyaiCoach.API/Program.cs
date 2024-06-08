@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using MyaiCoach.API.Middleware;
 using MyaiCoach.Application;
 using MyaiCoach.Domain.Entities;
 using MyaiCoach.Domain.Role;
@@ -26,10 +27,12 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddPersistance();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddIdentity<AppUser, AppRole>()
        .AddEntityFrameworkStores<ApiContext>();
@@ -68,8 +71,9 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowLocalhost");
 
-
 app.UseAuthorization();
+
+app.UseMiddleware<WichAiServiceMiddleware>();
 
 app.MapControllers();
 

@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using MyaiCoach.Application.Services;
+using MyaiCoach.Domain.Dtos.Ai;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,19 @@ namespace MyaiCoach.Application.Features.Command.AiCommand.NutritionConversation
 
         public async Task<NutritionConversationAsyncResponse> Handle(NutritionConversationAsyncRequest request, CancellationToken cancellationToken)
         {
-            var response = await _aiServices.NutritionConversationAsync(request.CreateNutritionDto);
+            CreateNutritionDto createNutritionDto = new()
+            {
+                Age = request.Age,
+                Weight = request.Weight,
+                Height = request.Height,
+                NutritionGoal = request.NutritionGoal,
+                NutritionDuration = request.NutritionDuration,
+                LactoseInTolerance = request.LactoseInTolerance,
+                GlutenInTolerance = request.GlutenInTolerance,
+                Vegan = request.Vegan
+            };
+
+            var response = await _aiServices.NutritionConversationAsync(createNutritionDto);
 
             return new()
             {

@@ -21,7 +21,7 @@ namespace MyaiCoach.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateWorkoutAi([FromHeader]string WichAiService, [FromBody] WokoutConversationRequest request)
+        public async Task<IActionResult> CreateWorkoutAi([FromHeader]string Aiservice, [FromBody] WokoutConversationRequest request)
         {
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
@@ -32,7 +32,7 @@ namespace MyaiCoach.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateNutritionAi([FromHeader] string WichAiService, [FromBody] NutritionConversationAsyncRequest request)
+        public async Task<IActionResult> CreateNutritionAi([FromHeader] string Aiservice, [FromBody] NutritionConversationAsyncRequest request)
         {
             if (request == null)
                 throw new ArgumentNullException(nameof(request));
