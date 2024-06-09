@@ -10,6 +10,6 @@ namespace MyaiCoach.Application.Features.Command.AiCommand.ChatConversationAi
 {
     public class WokoutConversationResponse
     {
-        public IEnumerable<IBaseViewDto> ProgramViewDtos { get; set; }
+        public bool IsSuccess { get; set; }
     }
 }

@@ -28,7 +28,7 @@ namespace MyaiCoach.API.Controllers
 
             WokoutConversationResponse response = await _mediator.Send(request);
 
-            return Ok(response.ProgramViewDtos);
+            return Ok(response);
         }
 
         [HttpPost]

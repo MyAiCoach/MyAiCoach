@@ -16,7 +16,7 @@ namespace MyaiCoach.Infrastructure.Utils
             var prompt = "Give me a only workout program. ";
 
             //For Age
-            prompt = "Im " + input.Age + " years old, ";
+            prompt += "Im " + input.Age + " years old, ";
 
             //For Weight and Height
             prompt += "weighing " + input.Weight + " kgs, ";
@@ -78,7 +78,7 @@ namespace MyaiCoach.Infrastructure.Utils
             var prompt = "Give me a only diet program for 7 days. ";
 
             //For Age
-            prompt = "Im " + input.Age + " years old, ";
+            prompt += "Im " + input.Age + " years old, ";
 
             //For Weight and Height
             prompt += "weighing " + input.Weight + " kgs, ";

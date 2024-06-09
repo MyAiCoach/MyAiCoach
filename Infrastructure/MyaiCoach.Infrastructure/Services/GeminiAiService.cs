@@ -28,7 +28,7 @@ namespace MyaiCoach.Infrastructure.Services
             _httpClient = new HttpClient();
             _googleApiKey = _configuration["GeminiAI:key"];
         }
-        public async Task<IEnumerable<IBaseViewDto>> NutritionConversationAsync(CreateNutritionDto input)
+        public async Task<IEnumerable<DietProgramViewDto>> NutritionConversationAsync(CreateNutritionDto input)
         {
             string message;
             string text = GeneratePrompt.GenerateNutrition(input);
@@ -81,10 +81,10 @@ namespace MyaiCoach.Infrastructure.Services
                 Console.WriteLine("Exception occurred: " + ex.Message);
             }
 
-            return new List<IBaseViewDto>();
+            return new List<DietProgramViewDto>();
         }
 
-        public async Task<IEnumerable<IBaseViewDto>> WokoutConversationAsync(CreateWorkoutDto input)
+        public async Task<IEnumerable<ProgramViewDto>> WokoutConversationAsync(CreateWorkoutDto input)
         {
             string message;
             string text = GeneratePrompt.GenerateWorkout(input);
@@ -137,7 +137,7 @@ namespace MyaiCoach.Infrastructure.Services
                 Console.WriteLine("Exception occurred: " + ex.Message);
             }
 
-            return new List<IBaseViewDto>();
+            return new List<ProgramViewDto>();
         }
     }
 }

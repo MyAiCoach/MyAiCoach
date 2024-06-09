@@ -107,27 +107,26 @@ namespace MyaiCoach.Persistance.Services
                 for (var i = 0; i < days.Exercises.Count; i++)
                 {
                     var currentExercise = days.Exercises[i];
-                    var currentSetRep = days.SetReps[i];
+                    var currentSetRep = days.SetReps.Count == 1 ? days.SetReps[0] : days.SetReps[i];
 
-
-                    var getExercise = _exerciseRepository.Table.FirstOrDefaultAsync(e => e.Name == currentExercise.Name);
+                    var getExercise = await _exerciseRepository.GetSingleAsync(e => e.Name == currentExercise.Name);
                     if (getExercise == null)
                         continue;
 
-                    var getSetRep = _setRepRepository.Table.FirstOrDefaultAsync(sr => sr.Set == currentSetRep.Set && sr.Rep == currentSetRep.Rep);
+                    var getSetRep = await _setRepRepository.GetSingleAsync(sr => sr.Set == currentSetRep.Set && sr.Rep == currentSetRep.Rep);
                     if (getSetRep == null)
                         continue;
 
                     var workoutSession = await _workoutSessionRepository.Table.FirstOrDefaultAsync(
-                          w => w.SetRepId == getSetRep.Result.Id &&
-                             w.ExerciseId == getExercise.Result.Id);
+                          w => w.SetRepId == getSetRep.Id &&
+                             w.ExerciseId == getExercise.Id);
 
                     if (workoutSession == null)
                     {
                         workoutSession = new WorkoutSession()
                         {
-                            ExerciseId = getExercise.Result.Id,
-                            SetRepId = getSetRep.Result.Id,
+                            ExerciseId = getExercise.Id,
+                            SetRepId = getSetRep.Id,
 
                         };
                         _ = await _workoutSessionRepository.AddAsync(workoutSession);

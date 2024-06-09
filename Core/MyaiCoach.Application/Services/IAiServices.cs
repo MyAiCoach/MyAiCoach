@@ -12,9 +12,9 @@ namespace MyaiCoach.Application.Services
 {
     public interface IAiServices
     {
-        Task<IEnumerable<IBaseViewDto>> WokoutConversationAsync(CreateWorkoutDto input);
+        Task<IEnumerable<ProgramViewDto>> WokoutConversationAsync(CreateWorkoutDto input);
 
-        Task<IEnumerable<IBaseViewDto>> NutritionConversationAsync(CreateNutritionDto input);
+        Task<IEnumerable<DietProgramViewDto>> NutritionConversationAsync(CreateNutritionDto input);
 
     }
 }

@@ -30,7 +30,7 @@ namespace MyaiCoach.Infrastructure.Services
             _openAIAPI = new OpenAIAPI(_configuration["OpenAI:Key"]);
         }
 
-        public async Task<IEnumerable<IBaseViewDto>> NutritionConversationAsync(CreateNutritionDto input)
+        public async Task<IEnumerable<DietProgramViewDto>> NutritionConversationAsync(CreateNutritionDto input)
         {
             var chat = _openAIAPI.Chat.CreateConversation();
             var text = GeneratePrompt.GenerateNutrition(input);
@@ -51,7 +51,7 @@ namespace MyaiCoach.Infrastructure.Services
             return data;
         }
 
-        public async Task<IEnumerable<IBaseViewDto>> WokoutConversationAsync(CreateWorkoutDto input)
+        public async Task<IEnumerable<ProgramViewDto>> WokoutConversationAsync(CreateWorkoutDto input)
         {
             var chat = _openAIAPI.Chat.CreateConversation();
             var text = GeneratePrompt.GenerateWorkout(input);
