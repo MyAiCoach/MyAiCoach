@@ -17,12 +17,20 @@ namespace MyaiCoach.Persistance
             services.AddDbContext<ApiContext>(option => option.UseNpgsql(GetConnectionString.GetConnection()));
 
             services.AddScoped<DbContext, ApiContext>();
+
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
             services.AddScoped<ISetRepRepository, SetRepRepository>();
             services.AddScoped<IWorkoutDayRepository, WorkoutDayRepository>();
             services.AddScoped<IWorkoutSessionRepository, WorkoutSessionRepository>();
             
+            services.AddScoped<IFoodRepository, FoodRepository>();
+            services.AddScoped<IGramRepository, GramRepository>();
+            services.AddScoped<INutritionDayRepository, NutritionDayRepository>();
+            services.AddScoped<INutritionSessionRepository, NutritionSessionRepository>();
+
+
             services.AddScoped<IUserExerciseService, UserExerciseService>();
+            services.AddScoped<IUserNutritionService, UserNutritionService>();
 
         }
     }

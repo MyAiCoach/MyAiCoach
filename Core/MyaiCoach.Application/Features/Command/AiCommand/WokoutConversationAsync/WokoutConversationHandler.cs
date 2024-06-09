@@ -42,12 +42,12 @@ namespace MyaiCoach.Application.Features.Command.AiCommand.ChatConversationAi
             };
             var response = await _aiServices.WokoutConversationAsync(createWorkoutDto);
 
-            var SaveWorkout = await _userExerciseService.SaveWorkoutAsync(Guid.Parse(userId), response.ToList());
+            var saveWorkout = await _userExerciseService.SaveWorkoutAsync(Guid.Parse(userId), response.ToList());
 
 
             return new()
             {
-                IsSuccess = SaveWorkout
+                IsSuccess = saveWorkout
             };
         }
     }

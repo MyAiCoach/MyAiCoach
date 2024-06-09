@@ -13,6 +13,7 @@ namespace MyaiCoach.Domain.Entities
         public string NameSureName { get; set; }
 
         public ICollection<WorkoutDay> WorkoutDays { get; set; }
+        public ICollection<NutritionDay> NutritionDays { get; set; }
 
     }
 }

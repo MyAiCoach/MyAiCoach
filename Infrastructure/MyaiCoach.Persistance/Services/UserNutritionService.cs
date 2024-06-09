@@ -107,27 +107,28 @@ namespace MyaiCoach.Persistance.Services
                 for (var i = 0; i < days.Foods.Count; i++)
                 {
                     var currentfood = days.Foods[i];
-                    var currentgram = days.Grams[i];
+                    var currentgram = days.Grams.Count == 1 ? days.Grams[0] : days.Grams[i];
 
 
-                    var getfood = _foodRepository.Table.FirstOrDefaultAsync(e => e.Name == currentfood.Name);
+                    var getfood = await _foodRepository.GetSingleAsync(e => e.Name == currentfood.Name);
                     if (getfood == null)
                         continue;
 
-                    var getgram = _gramRepository.Table.FirstOrDefaultAsync(sr => sr.Type == currentgram.Type && sr.Amount == currentgram.Amount);
+                    var getgram = await _gramRepository.GetSingleAsync(sr => sr.Type == currentgram.Type && sr.Amount == currentgram.Amount);
                     if (getgram == null)
                         continue;
 
                     var nutritionSession = await _nutritionSessionRepository.Table.FirstOrDefaultAsync(
-                          w => w.GramId == getgram.Result.Id &&
-                             w.FoodId == getfood.Result.Id);
+                          w => w.GramId == getgram.Id &&
+                             w.FoodId == getfood.Id);
 
                     if (nutritionSession == null)
                     {
                         nutritionSession = new NutritionSession()
                         {
-                           FoodId = getfood.Result.Id,
-                           GramId = getfood.Result.Id,
+                           FoodId = getfood.Id,
+                           GramId = getgram.Id,
+
                         };
                         _ = await _nutritionSessionRepository.AddAsync(nutritionSession);
                     }
@@ -137,6 +138,7 @@ namespace MyaiCoach.Persistance.Services
                         AppUserId = getUser.Id,
                         Days = days.Days,
                         NutritionSessionId = nutritionSession.Id,
+                        
                     };
                     var result = await _nutritionDayRepository.AddAsync(addnutritionDay);
                     _ = await _nutritionDayRepository.SaveAsync();

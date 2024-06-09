@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MyaiCoach.Domain.Entities;
 using MyaiCoach.Domain.Entities.Common;
 using MyaiCoach.Domain.Role;
+using System.Reflection.Emit;
 
 namespace MyaiCoach.Persistance.Contexts
 {
@@ -25,6 +26,18 @@ namespace MyaiCoach.Persistance.Contexts
         public DbSet<NutritionSession>  NutritionSessions { get; set; }
 
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            
+            builder.Entity<NutritionDay>()
+            .HasOne(nd => nd.AppUser)
+            .WithMany(au => au.NutritionDays)
+            .HasForeignKey(nd => nd.AppUserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

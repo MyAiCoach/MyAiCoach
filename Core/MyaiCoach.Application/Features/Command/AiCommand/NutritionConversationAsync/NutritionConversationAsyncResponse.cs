@@ -9,6 +9,6 @@ namespace MyaiCoach.Application.Features.Command.AiCommand.NutritionConversation
 {
     public class NutritionConversationAsyncResponse
     {
-        public IEnumerable<IBaseViewDto> DietProgramViewDtos { get; set; }
+        public bool IsSuccess { get; set; }
     }
 }

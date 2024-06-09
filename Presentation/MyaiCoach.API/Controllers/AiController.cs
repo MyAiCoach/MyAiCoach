@@ -39,7 +39,7 @@ namespace MyaiCoach.API.Controllers
 
             NutritionConversationAsyncResponse response = await _mediator.Send(request);
 
-            return Ok(response.DietProgramViewDtos);
+            return Ok(response);
         }
     }
 
