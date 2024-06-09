@@ -32,6 +32,9 @@ namespace MyaiCoach.Persistance
             services.AddScoped<IUserExerciseService, UserExerciseService>();
             services.AddScoped<IUserNutritionService, UserNutritionService>();
 
+
+            services.AddScoped<IUserService, UserService>();
+
         }
     }
 }

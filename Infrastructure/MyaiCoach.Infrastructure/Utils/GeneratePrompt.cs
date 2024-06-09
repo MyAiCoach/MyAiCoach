@@ -21,6 +21,8 @@ namespace MyaiCoach.Infrastructure.Utils
             //For Weight and Height
             prompt += "weighing " + input.Weight + " kgs, ";
 
+            prompt += "and " + input.Height + " cms tall. ";
+
             //For Workout Level
             switch (input.WorkoutLevel)
             {
@@ -82,6 +84,8 @@ namespace MyaiCoach.Infrastructure.Utils
 
             //For Weight and Height
             prompt += "weighing " + input.Weight + " kgs, ";
+
+            prompt+= "and " + input.Height + " cms tall. ";
 
             //For Nutrition Goal
             switch (input.NutritionGoal)

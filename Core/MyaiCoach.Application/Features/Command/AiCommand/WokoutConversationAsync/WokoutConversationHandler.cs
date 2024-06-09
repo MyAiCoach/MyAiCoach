@@ -16,12 +16,14 @@ namespace MyaiCoach.Application.Features.Command.AiCommand.ChatConversationAi
     public class WokoutConversationHandler : IRequestHandler<WokoutConversationRequest, WokoutConversationResponse>
     {
         private readonly IAiServices _aiServices;
+        private readonly IUserService _userService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserExerciseService _userExerciseService;
 
-        public WokoutConversationHandler(IAiServices aiServices, IHttpContextAccessor httpContextAccessor, IUserExerciseService userExerciseService)
+        public WokoutConversationHandler(IAiServices aiServices, IUserService userService, IHttpContextAccessor httpContextAccessor, IUserExerciseService userExerciseService)
         {
             _aiServices = aiServices;
+            _userService = userService;
             _httpContextAccessor = httpContextAccessor;
             _userExerciseService = userExerciseService;
         }
@@ -40,6 +42,10 @@ namespace MyaiCoach.Application.Features.Command.AiCommand.ChatConversationAi
                 WorkoutDuration = request.WorkoutDuration,
                 WorkoutDayCount = request.WorkoutDayCount
             };
+
+
+            var updateResponse = await _userService.UpdateUserForWorkoutAsync(createWorkoutDto, Guid.Parse(userId));
+
             var response = await _aiServices.WokoutConversationAsync(createWorkoutDto);
 
             var saveWorkout = await _userExerciseService.SaveWorkoutAsync(Guid.Parse(userId), response.ToList());
@@ -47,8 +53,10 @@ namespace MyaiCoach.Application.Features.Command.AiCommand.ChatConversationAi
 
             return new()
             {
-                IsSuccess = saveWorkout
+                IsSuccess = saveWorkout && updateResponse
             };
         }
+
+
     }
 }

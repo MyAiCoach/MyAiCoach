@@ -14,12 +14,14 @@ namespace MyaiCoach.Application.Features.Command.AiCommand.NutritionConversation
     public class NutritionConversationAsyncHandler : IRequestHandler<NutritionConversationAsyncRequest, NutritionConversationAsyncResponse>
     {
         private readonly IAiServices _aiServices;
+        private readonly IUserService _userService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IUserNutritionService _userNutritionService;
 
-        public NutritionConversationAsyncHandler(IAiServices aiServices, IHttpContextAccessor httpContextAccessor, IUserNutritionService userNutritionService)
+        public NutritionConversationAsyncHandler(IAiServices aiServices, IUserService userService, IHttpContextAccessor httpContextAccessor, IUserNutritionService userNutritionService)
         {
             _aiServices = aiServices;
+            _userService = userService;
             _httpContextAccessor = httpContextAccessor;
             _userNutritionService = userNutritionService;
         }
@@ -40,13 +42,16 @@ namespace MyaiCoach.Application.Features.Command.AiCommand.NutritionConversation
                 GlutenInTolerance = request.GlutenInTolerance,
                 Vegan = request.Vegan
             };
+
+            var updateResponse = await _userService.UpdateUserForNutritionAsync(createNutritionDto, Guid.Parse(userId));
+
             var response = await _aiServices.NutritionConversationAsync(createNutritionDto);
 
             var saveNutrition = await _userNutritionService.SaveNutritionAsync(Guid.Parse(userId), response.ToList());
 
             return new()
             {
-                IsSuccess = saveNutrition
+                IsSuccess = saveNutrition && updateResponse
             };
         }
     }
